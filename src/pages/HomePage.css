@@ -1,0 +1,69 @@
+/* src/pages/HomePage.css */
+
+.homepage-container {
+  padding: 20px; /* Base padding, can be overridden by App.css main padding */
+}
+
+.homepage-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.filter-search-controls {
+  margin-bottom: 30px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-search-input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  flex-grow: 1;
+  min-width: 200px;
+}
+
+.filter-search-select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  min-width: 150px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.no-products-message {
+  text-align: center;
+  font-size: 1.1em;
+  margin-top: 50px;
+  color: #666;
+}
+
+/* Media queries for HomePage.css */
+@media (max-width: 768px) {
+  .filter-search-controls {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .filter-search-input,
+  .filter-search-select {
+    min-width: 100%; /* Make them full width */
+  }
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr; /* Single column on very small screens */
+  }
+}

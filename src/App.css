@@ -1,0 +1,99 @@
+/* src/App.css */
+
+.app-header {
+  padding: 20px;
+  background: #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
+
+.app-nav {
+  display: flex;
+  gap: 15px; /* Use gap for spacing between links */
+  /* No margin-right needed on individual links if using gap */
+}
+
+.app-nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.app-main {
+  padding: 20px;
+  min-height: calc(100vh - 180px); /* Adjust based on header/footer height */
+}
+
+.app-footer {
+  padding: 20px;
+  background: #f0f0f0;
+  text-align: center;
+  margin-top: 40px;
+  border-top: 1px solid #ccc;
+}
+
+/* Media queries for App.css */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .app-nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .app-main {
+    padding: 15px;
+  }
+
+  .app-footer {
+    margin-top: 20px; /* Adjust footer margin for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header, .app-main, .app-footer {
+    padding: 10px;
+  }
+}
+
+/* src/App.css (add these new rules) */
+
+/* For the "Hello, User!" text */
+.app-nav-text {
+  color: #555;
+  font-weight: 600;
+  margin-right: 15px; /* Add some space before other links/buttons */
+}
+
+/* For the Logout button */
+.app-nav-button {
+  background: none;
+  border: 1px solid #007bff;
+  color: #007bff;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.app-nav-button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Adjust media queries for header if needed */
+@media (max-width: 768px) {
+  .app-nav-text, .app-nav-button {
+    margin-right: 0; /* Remove horizontal margin when stacked */
+    width: 100%; /* Make button full width if desired when stacked */
+    text-align: center;
+  }
+}

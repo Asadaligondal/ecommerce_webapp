@@ -1,44 +1,44 @@
 // src/pages/ProductDetailPage.jsx
 import React from 'react';
-import {useParams, Link} from 'react-router-dom'
-import productsData from '../data/products'
+import { useParams, Link } from 'react-router-dom';
+import productsData from '../data/products';
 import { useCart } from '../context/CartContext';
 
+// Import the new ProductDetailPage.css
+import './ProductDetailPage.css';
 
-function ProductDetailPage() { // 1. Use useParams to get the 'id' from the URL
+function ProductDetailPage() {
   const { id } = useParams();
-  const {addToCart} = useCart()
-
-  // 2. Find the product that matches the ID from our productsData
+  const { addToCart } = useCart();
   const product = productsData.find(p => p.id === id);
 
-  // 3. Handle case where product is not found (e.g., direct access to a non-existent ID)
   if (!product) {
     return (
-      <div style={{ padding: '20px', textAlign: 'center' }}>
+      <div className="product-not-found-container"> {/* Added a class for consistency */}
         <h2>Product Not Found</h2>
         <p>The product you are looking for does not exist.</p>
-        <Link to="/" style={{ color: '#007bff', textDecoration: 'none' }}>Go back to Home</Link>
+        <Link to="/" className="back-to-products-link">Go back to Home</Link> {/* Used existing class */}
       </div>
     );
   }
 
-  // 4. Render the product details if found
   return (
-    <div style={{ padding: '20px', display: 'flex', gap: '40px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-      <div style={{ flex: '1', minWidth: '300px', maxWidth: '400px' }}>
-        <img src={product.imageUrl} alt={product.name} style={{ width: '100%', height: 'auto', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }} />
+    <div className="product-detail-container"> {/* Use className */}
+      <div className="product-detail-image-wrapper"> {/* Use className */}
+        <img src={product.imageUrl} alt={product.name} className="product-detail-image" /> {/* Use className */}
       </div>
-      <div style={{ flex: '2', minWidth: '300px' }}>
+      <div className="product-detail-info"> {/* Use className */}
         <h1>{product.name}</h1>
-        <p style={{ fontSize: '1.5em', fontWeight: 'bold', color: '#333' }}>${product.price.toFixed(2)}</p>
-        <p>{product.description}</p>
-        <button onClick={()=>addToCart(product)}
-         style={{ background: '#28a745', color: 'white', border: 'none', padding: '12px 25px', borderRadius: '5px', cursor: 'pointer', fontSize: '1.1em', marginTop: '20px' }}>
+        <p className="product-detail-price">${product.price.toFixed(2)}</p> {/* Use className */}
+        <p className="product-detail-description">{product.description}</p> {/* Use className */}
+        <button
+          onClick={() => addToCart(product)}
+          className="add-to-cart-button" 
+        >
           Add to Cart
         </button>
-        <p style={{ marginTop: '30px' }}>
-          <Link to="/" style={{ color: '#007bff', textDecoration: 'none' }}>&larr; Back to Products</Link>
+        <p>
+          <Link to="/" className="back-to-products-link">&larr; Back to Products</Link> {/* Use className */}
         </p>
       </div>
     </div>

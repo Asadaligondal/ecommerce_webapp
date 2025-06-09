@@ -1,55 +1,54 @@
-import React from "react";
-import { useCart } from "../context/CartContext";
+// src/pages/CheckoutPage.jsx
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
-function CheckoutPage(){
-    const {cart, removeFromCart, setCart} = useCart()
+// Import the new CheckoutPage.css
+import './CheckoutPage.css';
 
-    // function to confirm order, after confirmation, we might generate a reciept, and empty the cart
-    const handleConfirmOrder = () =>{
-        alert("Thank You for Shoppiing with Us!!!!")
-        // could make the cart empty
-        setCart([])
-    }
+function CheckoutPage() {
+  const { cart, setCart } = useCart();
 
+  const handleConfirmOrder = () => {
+    alert("Thank you for your order! Your purchase has been confirmed.");
+    setCart([]); // Clear the entire cart
+  };
 
-    //function to subtotal, might need to import productsdata
-    const calculateTotal = () =>{
-        let total = 0
-        cart.forEach(item =>{
-            total+=item.quantity
-        })
-        return total
-    };
-    const itemCount = calculateTotal()
+  const calculateItemCount = () => { // Renamed from calculateTotal to be more accurate
+    let count = 0;
+    cart.forEach(item => {
+        count += item.quantity;
+    });
+    return count;
+  };
 
-    return(
-         <div style={{ padding: '20px', maxWidth: '600px', margin: '40px auto', border: '1px solid #ddd', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', textAlign: 'center' }}>
-      <h2>Checkout</h2>
+  const itemCount = calculateItemCount();
+
+  return (
+    <div className="checkout-page-container"> {/* Use className */}
+      <h2 className="checkout-page-title">Checkout</h2> {/* Use className */}
       {cart.length === 0 ? (
-        <p style={{ fontSize: '1.1em', color: '#dc3545' }}>Your cart is empty. Please add items before checking out.</p>
+        <p className="empty-cart-checkout-message">Your cart is empty. Please add items before checking out.</p> 
       ) : (
         <>
-          <p style={{ fontSize: '1.2em', marginBottom: '30px' }}>
+          <p className="checkout-summary-text">
             You are about to purchase **{itemCount} item(s)**.
-            {/* In a real app, you'd show the monetary total here */}
-            {/* E.g., You are about to purchase items totaling: ${subtotal.toFixed(2)} */}
           </p>
 
           <button
             onClick={handleConfirmOrder}
-            style={{ background: '#28a745', color: 'white', border: 'none', padding: '15px 30px', borderRadius: '5px', cursor: 'pointer', fontSize: '1.2em', marginBottom: '20px' }}
+            className="confirm-order-button"
           >
             Confirm Order
           </button>
         </>
       )}
 
-
-      <p style={{ marginTop: '30px' }}>
-        <Link to="/cart" style={{ color: '#007bff', textDecoration: 'none' }}>&larr; Back to Cart</Link>
+      <p>
+        <Link to="/cart" className="back-to-cart-link">&larr; Back to Cart</Link> {/* Use className */}
       </p>
     </div>
-    )
+  );
 }
+
 export default CheckoutPage;

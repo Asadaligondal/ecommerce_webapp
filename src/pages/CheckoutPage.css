@@ -1,0 +1,82 @@
+/* src/pages/CheckoutPage.css */
+
+.checkout-page-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 40px auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.checkout-page-title {
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.empty-cart-checkout-message {
+  font-size: 1.1em;
+  color: #dc3545;
+}
+
+.checkout-summary-text {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+
+.confirm-order-button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.confirm-order-button:hover {
+  background-color: #218838;
+}
+
+.back-to-cart-link {
+  margin-top: 30px;
+  display: block;
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.back-to-cart-link:hover {
+  color: #0056b3;
+}
+
+/* Media queries for CheckoutPage.css */
+@media (max-width: 768px) {
+  .checkout-page-container {
+    margin: 20px auto;
+    padding: 15px;
+    max-width: 90%; /* Allow it to be wider on tablets */
+  }
+  .confirm-order-button {
+    width: 100%;
+    padding: 12px 25px;
+    font-size: 1.1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-page-container {
+    padding: 10px;
+    margin: 10px auto;
+  }
+  .checkout-page-title {
+    font-size: 1.5em;
+  }
+  .checkout-summary-text {
+    font-size: 1.1em;
+  }
+}
