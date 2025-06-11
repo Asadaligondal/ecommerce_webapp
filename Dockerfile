@@ -1,11 +1,20 @@
-# Use official Nginx image to serve static files
+# ----------- Stage 1: Build ----------
+FROM node:18 AS builder
+
+WORKDIR /app
+
+# Copy everything and install deps
+COPY . .
+RUN npm install
+RUN npm run build
+
+# ----------- Stage 2: Serve ----------
 FROM nginx:alpine
 
-# Copy Vite's build output to Nginx's public directory
-COPY dist/ /usr/share/nginx/html
+# Copy build output from previous stage
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Optional: expose port
+# Optional: Expose port 80 (default)
 EXPOSE 80
 
-# Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]
