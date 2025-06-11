@@ -4,41 +4,48 @@ import { useParams, Link } from 'react-router-dom';
 import productsData from '../data/products';
 import { useCart } from '../context/CartContext';
 
-// Import the new ProductDetailPage.css
 import './ProductDetailPage.css';
 
 function ProductDetailPage() {
   const { id } = useParams();
-  const { addToCart } = useCart();
   const product = productsData.find(p => p.id === id);
+  const { addToCart, cart } = useCart();
 
+  // Check if product exists before rendering
   if (!product) {
-    return (
-      <div className="product-not-found-container"> {/* Added a class for consistency */}
-        <h2>Product Not Found</h2>
-        <p>The product you are looking for does not exist.</p>
-        <Link to="/" className="back-to-products-link">Go back to Home</Link> {/* Used existing class */}
-      </div>
-    );
+    return <div className="product-detail-container">Product not found!</div>;
   }
 
+  // Check if item is already in cart to disable button and show quantity
+  const itemInCart = cart.find(item => item.productId === product.id);
+  const isAlreadyInCart = !!itemInCart;
+
   return (
-    <div className="product-detail-container"> {/* Use className */}
-      <div className="product-detail-image-wrapper"> {/* Use className */}
-        <img src={product.imageUrl} alt={product.name} className="product-detail-image" /> {/* Use className */}
+    <div className="product-detail-container">
+      <div className="product-image-section">
+        <img src={product.imageUrl} alt={product.name} className="product-detail-image" />
       </div>
-      <div className="product-detail-info"> {/* Use className */}
-        <h1>{product.name}</h1>
-        <p className="product-detail-price">${product.price.toFixed(2)}</p> {/* Use className */}
-        <p className="product-detail-description">{product.description}</p> {/* Use className */}
+      <div className="product-info-section">
+        <h1 className="product-detail-name">{product.name}</h1>
+        <p className="product-detail-category">Category: {product.category}</p>
+        <p className="product-detail-price">${product.price.toFixed(2)}</p>
+
+        {/* --- NEW: Product Description --- */}
+        <div className="product-detail-description-section">
+          <h3 className="product-detail-description-title">Product Description</h3>
+          <p className="product-detail-description">{product.description}</p>
+        </div>
+        {/* --- END NEW --- */}
+
         <button
-          onClick={() => addToCart(product)}
-          className="add-to-cart-button" 
+          onClick={() => addToCart(product.id)}
+          className="add-to-cart-button"
+          disabled={isAlreadyInCart} // Disable button if already in cart
         >
-          Add to Cart
+          {isAlreadyInCart ? `Added to Cart (${itemInCart.quantity})` : 'Add to Cart'}
         </button>
         <p>
-          <Link to="/" className="back-to-products-link">&larr; Back to Products</Link> {/* Use className */}
+          <Link to="/" className="back-to-home-link">&larr; Back to Products</Link>
         </p>
       </div>
     </div>

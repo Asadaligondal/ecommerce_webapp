@@ -4,21 +4,52 @@
   padding: 20px;
   background: #f0f0f0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   border-bottom: 1px solid #ccc;
+  gap: 50px;
 }
 
 .app-nav {
   display: flex;
-  gap: 15px; /* Use gap for spacing between links */
-  /* No margin-right needed on individual links if using gap */
+  gap: 15px;
+  justify-content: center;
 }
 
 .app-nav a {
   text-decoration: none;
   color: #333;
   font-weight: bold;
+}
+
+.cart-link {
+    display: flex;
+    align-items: center; /* Align icon and text vertically */
+    position: relative; /* For positioning the badge */
+    padding: 2px 5px; /* Add some padding around the link content */
+    border-radius: 5px; /* Subtle rounded corners */
+    transition: background-color 0.2s ease;
+}
+.cart-link:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Light blue background on hover */
+}
+.app-nav a:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Light blue background on hover */
+}
+.cart-badge {
+    position: absolute;
+    top: -8px; /* Adjust as needed to position above cart */
+    right: -8px; /* Adjust as needed to position to the right */
+    background-color: #dc3545; /* Red background for the badge */
+    color: white;
+    border-radius: 50%; /* Make it circular */
+    padding: 2px 6px; /* Adjust padding for size */
+    font-size: 0.75em; /* Smaller font for the count */
+    font-weight: bold;
+    min-width: 18px; /* Ensure it's not too small for single digits */
+    text-align: center;
+    line-height: 1.2; /* Adjust line height for vertical centering of number */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Subtle shadow for depth */
 }
 
 .app-main {

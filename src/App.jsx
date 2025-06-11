@@ -3,6 +3,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { CartProvider, useCart } from './context/CartContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
+// icons
+import { FaSearch } from 'react-icons/fa';
+import { FaShoppingCart } from 'react-icons/fa'; // Import a shopping cart icon from Font Awesome
+
 // Import the new App.css
 import './App.css';
 
@@ -21,17 +25,20 @@ function HeaderContent() {
     <header className="app-header"> {/* Use className */}
       <nav className="app-nav"> {/* Use className */}
         <Link to="/" className="app-nav a">Home</Link> {/* Use className */}
-        <Link to="/cart" className="app-nav a">Cart</Link> {/* Use className */}
-        {isAuthenticated? (
+        <Link to="/cart" className="app-nav a cart-link"> {/* Added a new class 'cart-link' */}
+          <FaShoppingCart className="cart-icon" /> {/* Use the imported icon */}
+          
+          {totalCartItems > 0 && ( 
+            <span className="cart-badge">{totalCartItems}</span>
+          )}
+        </Link>
+        {/* {isAuthenticated? (
           <>
             <span className="app-nav-text">Hello, {user.username}!</span>
             <button onClick={logout} className="app-nav-button">Logout</button>
           </>
-        ):(<Link to="/login" className="app-nav a">Login</Link>)}
+        ):(<Link to="/login" className="app-nav a">Login</Link>)} */}
       </nav>
-      <div>
-        Cart ({totalCartItems} items)
-      </div>
     </header>
   );
 }

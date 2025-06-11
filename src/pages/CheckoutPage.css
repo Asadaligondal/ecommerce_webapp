@@ -8,6 +8,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   text-align: center;
+  background-color: #fff; /* Ensure white background */
 }
 
 .checkout-page-title {
@@ -21,9 +22,79 @@
   color: #dc3545;
 }
 
-.checkout-summary-text {
+/* REMOVED: .checkout-summary-text is no longer needed */
+/* .checkout-summary-text {
   font-size: 1.2em;
   margin-bottom: 30px;
+} */
+
+/* --- New Styles for Order Summary --- */
+.order-summary-list {
+  text-align: left; /* Align text within the list to the left */
+  margin-bottom: 25px;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #fcfcfc;
+}
+
+.order-summary-list h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #555;
+  font-size: 1.1em;
+  text-align: center; /* Center the heading within the list */
+}
+
+.order-summary-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed #eee;
+  font-size: 0.95em;
+  color: #333;
+}
+
+.summary-item:last-child {
+  border-bottom: none; /* No border for the last item */
+}
+
+.order-totals-breakdown {
+  text-align: right; /* Align totals to the right */
+  margin-bottom: 30px;
+  padding-top: 15px;
+  border-top: 2px solid #eee;
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+  color: #333;
+}
+
+.total-line span:first-child {
+  font-weight: normal;
+}
+
+.total-line span:last-child {
+  font-weight: bold;
+}
+
+.grand-total {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #007bff; /* Highlight grand total */
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
 }
 
 .confirm-order-button {
@@ -36,6 +107,8 @@
   font-size: 1.2em;
   margin-bottom: 20px;
   transition: background-color 0.2s ease;
+  width: 100%; /* Make button full width in container */
+  max-width: 300px; /* Optional: limit max width of button */
 }
 
 .confirm-order-button:hover {
@@ -59,7 +132,7 @@
   .checkout-page-container {
     margin: 20px auto;
     padding: 15px;
-    max-width: 90%; /* Allow it to be wider on tablets */
+    max-width: 90%;
   }
   .confirm-order-button {
     width: 100%;
@@ -76,7 +149,19 @@
   .checkout-page-title {
     font-size: 1.5em;
   }
-  .checkout-summary-text {
-    font-size: 1.1em;
+  /* .checkout-summary-text { REMOVED } */
+  .confirm-order-button {
+    padding: 10px;
+    font-size: 1em;
+  }
+  .order-summary-list, .order-totals-breakdown {
+      padding: 10px;
+      margin-bottom: 15px;
+  }
+  .summary-item, .total-line {
+      font-size: 0.9em;
+  }
+  .grand-total {
+      font-size: 1.2em;
   }
 }

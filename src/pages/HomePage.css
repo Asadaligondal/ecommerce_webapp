@@ -10,27 +10,77 @@
   color: #333;
 }
 
-.filter-search-controls {
+.filter-controls-modern {
   margin-bottom: 30px;
   display: flex;
   gap: 20px;
   align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
-.filter-search-input {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+.search-input-wrapper-modern {
+  display: flex; /* Use flexbox to align icon and input */
+  align-items: center; /* Vertically center icon and text */
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 25px; /* Makes it pill-shaped */
+  padding: 8px 18px; /* Padding inside the rounded box */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08); /* Subtle shadow for depth */
   flex-grow: 1;
-  min-width: 200px;
+  max-width: 350px;
+  min-width: 250px;
 }
 
-.filter-search-select {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  min-width: 150px;
+.search-icon-modern {
+  color: #777; /* Color of the icon */
+  margin-right: 10px; /* Space between icon and input text */
+  font-size: 1.2em; /* Size of the icon */
+}
+
+.search-input-modern {
+  border: none; /* Remove default input border */
+  outline: none; /* Remove focus outline */
+  flex-grow: 1; /* Allow input to take remaining space */
+  padding: 0; /* Remove default padding as wrapper handles it */
+  font-size: 1.05em;
+  background-color: transparent; /* Make input background transparent to show wrapper's background */
+  color: #333;
+}
+
+/* --- Styles for Category Select (already looking good, just ensuring consistency) --- */
+.category-select-modern {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 25px; /* Pill-shaped */
+  background-color: white;
+  font-size: 1.05em;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23777%22%20d%3D%22M6%209L0%203h12z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 10px;
+  min-width: 180px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+/* ... rest of HomePage.css including media queries ... */
+
+/* Adjust media queries for HomePage.css if needed */
+@media (max-width: 768px) {
+  .filter-controls-modern {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .search-input-wrapper-modern,
+  .category-select-modern {
+    min-width: 100%;
+    max-width: none;
+  }
+  /* ... other media queries ... */
 }
 
 .product-grid {
