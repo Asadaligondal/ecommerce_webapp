@@ -8,7 +8,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   text-align: center;
-  background-color: #fff; /* Ensure white background */
+  background-color: #fff;
 }
 
 .checkout-page-title {
@@ -22,15 +22,78 @@
   color: #dc3545;
 }
 
-/* REMOVED: .checkout-summary-text is no longer needed */
-/* .checkout-summary-text {
-  font-size: 1.2em;
+/* --- NEW STYLES FOR DELIVERY FORM --- */
+.delivery-info-form-section {
   margin-bottom: 30px;
-} */
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fcfcfc;
+  text-align: left; /* Align text within the form section to the left */
+}
 
-/* --- New Styles for Order Summary --- */
+.delivery-info-form-section h3 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #555;
+  font-size: 1.2em;
+}
+
+.delivery-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between form groups */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px; /* Smaller margin for error message to be closer */
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+  font-size: 0.95em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group select {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+/* Style for invalid input */
+.form-group .input-error {
+  border-color: #dc3545; /* Red border for error */
+}
+
+/* Style for error message */
+.error-message {
+  color: #dc3545; /* Red text for error */
+  font-size: 0.85em;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+/* --- END NEW STYLES FOR DELIVERY FORM --- */
+
+
+/* Order Summary List Styles */
 .order-summary-list {
-  text-align: left; /* Align text within the list to the left */
+  text-align: left;
   margin-bottom: 25px;
   padding: 15px;
   border: 1px solid #eee;
@@ -43,7 +106,7 @@
   margin-bottom: 15px;
   color: #555;
   font-size: 1.1em;
-  text-align: center; /* Center the heading within the list */
+  text-align: center;
 }
 
 .order-summary-list ul {
@@ -62,11 +125,11 @@
 }
 
 .summary-item:last-child {
-  border-bottom: none; /* No border for the last item */
+  border-bottom: none;
 }
 
 .order-totals-breakdown {
-  text-align: right; /* Align totals to the right */
+  text-align: right;
   margin-bottom: 30px;
   padding-top: 15px;
   border-top: 2px solid #eee;
@@ -91,7 +154,7 @@
 .grand-total {
   font-size: 1.4em;
   font-weight: bold;
-  color: #007bff; /* Highlight grand total */
+  color: #007bff;
   margin-top: 15px;
   padding-top: 10px;
   border-top: 1px solid #ddd;
@@ -107,8 +170,8 @@
   font-size: 1.2em;
   margin-bottom: 20px;
   transition: background-color 0.2s ease;
-  width: 100%; /* Make button full width in container */
-  max-width: 300px; /* Optional: limit max width of button */
+  width: 100%;
+  max-width: 300px;
 }
 
 .confirm-order-button:hover {
@@ -139,6 +202,10 @@
     padding: 12px 25px;
     font-size: 1.1em;
   }
+  .delivery-info-form-section,
+  .order-summary-list, .order-totals-breakdown {
+      padding: 15px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -149,11 +216,11 @@
   .checkout-page-title {
     font-size: 1.5em;
   }
-  /* .checkout-summary-text { REMOVED } */
   .confirm-order-button {
     padding: 10px;
     font-size: 1em;
   }
+  .delivery-info-form-section,
   .order-summary-list, .order-totals-breakdown {
       padding: 10px;
       margin-bottom: 15px;
@@ -163,5 +230,18 @@
   }
   .grand-total {
       font-size: 1.2em;
+  }
+  .delivery-info-form-section h3 {
+      font-size: 1.1em;
+  }
+  .form-group label {
+      font-size: 0.9em;
+  }
+  .form-group input, .form-group select {
+      padding: 8px 10px;
+      font-size: 0.9em;
+  }
+  .error-message {
+      font-size: 0.8em;
   }
 }
