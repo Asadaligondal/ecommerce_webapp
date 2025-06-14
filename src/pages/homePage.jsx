@@ -23,7 +23,7 @@ function HomePage() {
 
   return (
     <div className="homepage-container">
-      <h2 className="homepage-title">Our Products</h2>
+      <h2 className="homepage-title">Checking Render deployment</h2>
 
       <div className="filter-controls-modern">
         {/* --- MODIFIED SEARCH INPUT SECTION --- */}
