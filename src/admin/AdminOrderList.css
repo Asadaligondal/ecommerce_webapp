@@ -1,0 +1,76 @@
+/* client/src/admin/AdminOrderList.css */
+
+.admin-order-list-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-order-list-title {
+    color: #333;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2.2em;
+    color: #28aa46; /* Matches your confirmation email color */
+}
+
+.admin-order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.admin-order-table th,
+.admin-order-table td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.admin-order-table th {
+    background-color: #eef2f6;
+    color: #555;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.admin-order-table tbody tr:nth-child(even) {
+    background-color: #f6f8fa;
+}
+
+.admin-order-table tbody tr:hover {
+    background-color: #e9eff5;
+}
+
+.view-details-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.view-details-btn:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: #d9534f; /* Red for errors */
+    font-weight: bold;
+    text-align: center;
+}
+
+.no-orders-message {
+    color: #555;
+    text-align: center;
+    font-style: italic;
+}

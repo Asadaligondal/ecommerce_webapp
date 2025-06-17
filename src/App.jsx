@@ -16,7 +16,8 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import LoginPage from './pages/LoginPage'; 
-
+import AdminOrderList from './admin/AdminOrderList';
+import AdminLoginPage from './admin/AdminLoginPage'; // <--- NEW IMPORT
 // HeaderContent component (now uses CSS classes)
 function HeaderContent() {
   const { totalCartItems } = useCart();
@@ -58,6 +59,11 @@ function App() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/login" element={<LoginPage />} /> {/* NEW ROUTE */}
+             <Route path="/admin/orders" element={<AdminOrderList />} />
+
+              {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLoginPage />} /> {/* <--- NEW ROUTE */}
+            <Route path="/admin/orders" element={<AdminOrderList />} />
           </Routes>
         </main>
 
