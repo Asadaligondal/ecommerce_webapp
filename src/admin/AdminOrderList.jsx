@@ -1,17 +1,44 @@
-// client/src/admin/AdminOrderList.js
+// client/src/admin/AdminOrderList.jsx
 
 import React, { useState, useEffect } from 'react';
-import './AdminOrderList.css'; // We'll create this CSS file next
+import { useNavigate } from 'react-router-dom'; // <--- NEW IMPORT
+import './AdminOrderList.css';
 
 const AdminOrderList = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate(); // <--- NEW
 
     useEffect(() => {
         const fetchOrders = async () => {
+            const token = localStorage.getItem('adminToken'); // <--- Retrieve the token
+
+            // --- NEW: Basic Frontend Auth Guard ---
+            if (!token) {
+                setError('You are not authenticated. Please log in.');
+                setLoading(false);
+                navigate('/admin/login'); // Redirect to login if no token
+                return; // Stop execution
+            }
+            // --- END NEW Frontend Auth Guard ---
+
             try {
-                const response = await fetch('http://localhost:5000/api/orders'); // Call your backend API
+                const response = await fetch('http://localhost:5000/api/orders', {
+                    headers: {
+                        'Authorization': `Bearer ${token}` // <--- Include the token in headers
+                    }
+                });
+
+                // --- NEW: Handle 401/403 responses (token expired/invalid) ---
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem('adminToken'); // Clear invalid token
+                    navigate('/admin/login'); // Redirect to login
+                    setError('Session expired or unauthorized. Please log in again.');
+                    return; // Stop execution
+                }
+                // --- END NEW Handle 401/403 responses ---
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -30,8 +57,9 @@ const AdminOrderList = () => {
         };
 
         fetchOrders();
-    }, []); // Empty dependency array means this runs once on mount
+    }, [navigate]); // Add navigate to dependency array
 
+    // ... (rest of your component's JSX remains the same) ...
     if (loading) {
         return <div className="admin-order-list-container">Loading orders...</div>;
     }
