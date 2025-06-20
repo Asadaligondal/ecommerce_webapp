@@ -1,89 +1,112 @@
 // src/pages/CartPage.jsx
+
 import React from 'react';
-import productsData from '../data/products';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-
-// Import the new CartPage.css
 import './CartPage.css';
 
 function CartPage() {
-  const { cart, updateQuantity, removeFromCart } = useCart();
+  const { cart, updateQuantity, removeFromCart, getTotalPrice } = useCart();
+console.log("Cart contents:", cart);
+console.log("Cart length:", cart.length);
+cart.forEach((item, index) => {
+  console.log(`Cart item ${index}:`, {
+    productId: item.productId,
+    price: item.price,
+    quantity: item.quantity,
+    priceType: typeof item.price
+  });
+});
 
-  const calculateSubtotal = () => {
-    let total = 0;
-    cart.forEach(cartItem => {
-      const product = productsData.find(p => p.id === cartItem.productId);
-      if (product) {
-        total += product.price * cartItem.quantity;
-      }
-    });
-    return total;
-  };
+console.log("getTotalPrice result:", getTotalPrice());
+  // DEBUG: Remove these console.logs after fixing
+  console.log("Cart contents:", cart);
+  console.log("Cart length:", cart.length);
 
-  const subtotal = calculateSubtotal();
+  const subtotal = getTotalPrice();
 
   return (
-    <div className="cart-page-container"> {/* Use className */}
-      <h2 className="cart-page-title">Your Shopping Cart</h2> {/* Use className */}
+    <div className="cart-page">
+      <div className="container">
+        <h1>Your Shopping Cart</h1>
 
-      {cart.length === 0 ? (
-        <p className="empty-cart-message"> {/* Use className */}
-          Your cart is currently empty. <Link to="/" className="app-nav-link">Start shopping!</Link> {/* Reuse a global link class if appropriate */}
-        </p>
-      ) : (
-        <div className="cart-items-list"> {/* Use className */}
-          {cart.map(cartItem => {
-            const product = productsData.find(p => p.id === cartItem.productId);
-
-            return product ? (
-              <div key={cartItem.productId} className="cart-item"> {/* Use className */}
-                <Link to={`/products/${product.id}`} className="cart-item-link"> {/* Use className */}
-                  <img src={product.imageUrl} alt={product.name} className="cart-item-image" /> {/* Use className */}
-                  <div className="cart-item-info"> {/* Use className */}
-                    <h3>{product.name}</h3>
-                    <p>Price: ${product.price.toFixed(2)}</p>
-                  </div>
-                </Link>
-                <div className="cart-item-quantity-controls"> {/* Use className */}
-                  <button
-                    onClick={() => updateQuantity(product.id, -1)}
-                    className="quantity-button"
-                  >
-                    -
-                  </button>
-                  <span className="cart-item-quantity">{cartItem.quantity}</span> {/* Use className */}
-                  <button
-                    onClick={() => updateQuantity(product.id, 1)}
-                    className="quantity-button primary" 
-                  >
-                    +
-                  </button>
-                </div>
-                <div className="cart-item-total-price"> {/* Use className */}
-                  ${(product.price * cartItem.quantity).toFixed(2)}
-                </div>
-                <button
-                  onClick={() => removeFromCart(product.id)}
-                  className="remove-item-button" 
-                >
-                  Remove
-                </button>
-              </div>
-            ) : null;
-          })}
-
-          <div className="cart-subtotal"> {/* Use className */}
-            Subtotal: ${subtotal.toFixed(2)}
+        {cart.length === 0 ? (
+          <div className="empty-cart">
+            <p>Your cart is currently empty. Start shopping!</p>
+            <Link to="/" className="continue-shopping-btn">
+              Continue Shopping
+            </Link>
           </div>
+        ) : (
+          <div className="cart-content">
+            <div className="cart-items">
+              {cart.map(cartItem => {
+                // Additional safety checks
+                if (!cartItem || !cartItem.productId) {
+                  console.warn("Invalid cart item:", cartItem);
+                  return null;
+                }
 
-          <Link to="/checkout" className="proceed-to-checkout-link"> {/* Use className */}
-            <button className="proceed-to-checkout-button"> {/* Use className */}
-              Proceed to Checkout
-            </button>
-          </Link>
-        </div>
-      )}
+                return (
+                  <div key={cartItem.productId} className="cart-item">
+                    <Link to={`/products/${cartItem.productId}`} className="cart-item-link">
+                      <img 
+                        src={cartItem.imageUrl || '/placeholder-image.jpg'} 
+                        alt={cartItem.name || 'Product'} 
+                        className="cart-item-image"
+                      />
+                    </Link>
+                    
+                    <div className="cart-item-details">
+                      <Link to={`/products/${cartItem.productId}`}>
+                        <h3>{cartItem.name || 'Unknown Product'}</h3>
+                      </Link>
+                      <p>Price: ${cartItem.price ? cartItem.price.toFixed(2) : '0.00'}</p>
+                    </div>
+
+                    <div className="quantity-controls">
+                      <button 
+                        onClick={() => updateQuantity(cartItem.productId, -1)}
+                        className="quantity-button"
+                        disabled={cartItem.quantity <= 1}
+                      >
+                        -
+                      </button>
+                      <span className="quantity-display">{cartItem.quantity || 0}</span>
+                      <button 
+                        onClick={() => updateQuantity(cartItem.productId, 1)}
+                        className="quantity-button primary"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <div className="item-total">
+                      <strong>
+                        ${((cartItem.price || 0) * (cartItem.quantity || 0)).toFixed(2)}
+                      </strong>
+                    </div>
+
+                    <button 
+                      onClick={() => removeFromCart(cartItem.productId)}
+                      className="remove-item-button"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="cart-summary">
+              <h3>Subtotal: ${subtotal.toFixed(2)}</h3>
+              <Link to="/checkout" className="checkout-btn">
+                Proceed to Checkout
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

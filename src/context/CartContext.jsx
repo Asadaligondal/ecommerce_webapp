@@ -10,7 +10,7 @@ const CartContext = createContext([]);
 // and provide the cart state and functions to its children.
 export const CartProvider = ({ children }) => {
 
-  // here we are going to add a new feature of local storage,, we try to load the cart from local, if its empty then we just an empty cart,, 
+  // here we are going to add a new feature of local storage,, we try to load the cart from local, if its empty then we just an empty cart,,
   const [cart, setCart] = useState(() =>{
     try{
       const storedCart = localStorage.getItem('ecomCart');
@@ -27,19 +27,25 @@ export const CartProvider = ({ children }) => {
     }catch(error){console.log("Failed to save the cart in local storage", error)}
   },[cart]);
 
-  const addToCart = (productToAdd) => {
+  // IMPORTANT CHANGE HERE
+  const addToCart = (productToAdd, quantity = 1) => { // Added quantity parameter as used in ProductCard
     setCart(prevCart => {
-      const existingItemIndex = prevCart.findIndex(item => item.productId === productToAdd.id);
+      // Use productToAdd.productId consistently for finding existing items
+      const existingItemIndex = prevCart.findIndex(item => item.productId === productToAdd.productId);
 
       if (existingItemIndex > -1) {
         const updatedCart = [...prevCart];
-        updatedCart[existingItemIndex].quantity += 1;
+        // Ensure you update the quantity correctly
+        updatedCart[existingItemIndex].quantity += quantity;
         return updatedCart;
       } else {
-        return [...prevCart, { productId: productToAdd.id, quantity: 1 }];
+        // Add the full product object to the cart, along with quantity
+        // This is crucial so you have name, price, imageUrl etc. on the cart page
+        return [...prevCart, { ...productToAdd, quantity: quantity }];
       }
     });
   };
+  // END IMPORTANT CHANGE
 
   const updateQuantity = (productId, change) => {
     setCart(prevCart => {
@@ -64,11 +70,16 @@ export const CartProvider = ({ children }) => {
     setCart(prevCart => prevCart.filter(item => item.productId !== productId));
   };
 
+  // Calculating total items and total price based on the 'cart' state
   const totalCartItems = cart.reduce((total, item) => total + item.quantity, 0);
+  const getTotalPrice = () => { // Add this function for total price
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  };
+
 
   // 3. The value prop of the Provider passes the data and functions down
   return (
-    <CartContext.Provider value={{ cart, setCart, addToCart, updateQuantity, removeFromCart, totalCartItems }}>
+    <CartContext.Provider value={{ cart, setCart, addToCart, updateQuantity, removeFromCart, totalCartItems, getTotalPrice }}> {/* Include getTotalPrice */}
       {children}
     </CartContext.Provider>
   );

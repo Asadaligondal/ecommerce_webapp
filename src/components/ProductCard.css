@@ -1,67 +1,235 @@
-/* src/components/ProductCard.css */
+/* client/src/components/ProductCard.css */
 
 .product-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  display: flex; /* Make it a flex container for content alignment */
-  flex-direction: column;
-  justify-content: space-between; /* Push button to bottom */
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.08),
+        0 1px 8px rgba(0, 0, 0, 0.02);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    height: 420px; /* Fixed height for square-like appearance */
+    width: 100%;
+    max-width: 320px; /* Maximum width for consistency */
+    position: relative;
+    backdrop-filter: blur(10px);
 }
 
-.product-card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block; /* Make the link block level to wrap content */
-  flex-grow: 1; /* Allow link content to grow */
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.product-card-img {
-  max-width: 100%;
-  height: 150px;
-  object-fit: contain;
-  margin-bottom: 10px;
+.product-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.12),
+        0 8px 16px rgba(0, 0, 0, 0.08);
 }
 
-.product-card h3 {
-  margin-top: 10px;
-  margin-bottom: 5px;
+.product-card:hover::before {
+    opacity: 1;
 }
 
-.product-card p {
-  margin: 0 0 10px 0; /* Add margin below price */
+.product-card a {
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.product-card-button {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  /* Remove margin-top as the flexbox handles spacing */
-  transition: background-color 0.2s ease; /* Smooth hover effect */
+.product-card-image {
+    width: 100%;
+    height: 240px; /* Larger image area for square-like proportion */
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+    background: linear-gradient(45deg, #f0f2f5, #e9ecef);
 }
 
-.product-card-button:hover {
-  background-color: #0056b3;
+.product-card:hover .product-card-image {
+    transform: scale(1.05);
 }
 
-/* Media queries for ProductCard.css (adjusting for very small screens) */
-@media (max-width: 480px) {
-  .product-card-img {
-    height: 120px; /* Slightly smaller images on small screens */
-  }
-  .product-card h3 {
+.product-card-details {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.product-card-title {
     font-size: 1.1em;
-  }
-  .product-card p {
-    font-size: 0.9em;
-  }
-  .product-card-button {
-    padding: 6px 12px;
-    font-size: 0.9em;
-  }
+    margin: 0 0 12px 0;
+    color: #2d3748;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 2.6em; /* Reserve space for 2 lines */
+}
+
+.product-card-title a {
+    color: #2d3748;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-size: 0% 2px;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+}
+
+.product-card-title a:hover {
+    color: #667eea;
+    background-size: 100% 2px;
+}
+
+.product-card-bottom {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.product-card-price {
+    fontSize: 1.4em;
+    color: #1a202c;
+    margin: 0;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Modern Add to Cart Button */
+/*  */
+
+.add-to-cart-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #0056b3;
+}
+
+.add-to-cart-btn:hover::before {
+    left: 100%;
+}
+
+.add-to-cart-btn:active {
+    transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .product-card {
+        height: 380px;
+        max-width: 280px;
+    }
+    
+    .product-card-image {
+        height: 200px;
+    }
+    
+    .product-card-details {
+        padding: 16px;
+    }
+    
+    .product-card-title {
+        font-size: 1em;
+    }
+    
+    .product-card-price {
+        font-size: 1.2em;
+    }
+    
+    .add-to-cart-btn {
+    background-color: #007bff; /* Primary blue for action */
+    color: white;
+    border: none;
+    padding: 10px 15px; /* Adjust padding for card size */
+    border-radius: 0 0 10px 10px; /* Rounded only at bottom to match card */
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Full width button at the bottom of the card */
+    align-self: flex-end; /* Pushes button to the bottom */
+    box-sizing: border-box; /* Include padding in width */
+}
+}
+
+/* Grid container styling suggestion */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    padding: 40px 20px;
+    justify-items: center;
+}
+
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 20px 15px;
+    }
+}
+
+/* Loading state */
+.product-card.loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Badge/Tag styling (for sale, new, etc.) */
+.product-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
 }

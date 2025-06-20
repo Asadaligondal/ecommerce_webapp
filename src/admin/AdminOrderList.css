@@ -74,3 +74,66 @@
     text-align: center;
     font-style: italic;
 }
+
+/* client/src/admin/AdminOrderList.css */
+
+/* ... (existing CSS) ... */
+
+.admin-header-controls { /* Styles for the new wrapper div */
+    display: flex;
+    justify-content: space-between; /* Pushes title and button to ends */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logout-btn {
+    padding: 8px 15px;
+    background-color: #dc3545; /* Red for logout */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
+
+/* client/src/admin/AdminOrderList.css */
+
+/* ... (existing CSS) ... */
+
+.admin-header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.admin-actions-group { /* Style for the new button group */
+    display: flex;
+    gap: 15px; /* Space between buttons */
+    flex-wrap: wrap;
+    margin-top: 10px; /* Adjust if needed for layout on smaller screens */
+    justify-content: flex-end; /* Align to right */
+}
+
+.add-product-link-btn {
+    display: inline-block; /* Treat Link as a button */
+    padding: 8px 15px;
+    background-color: #28a745; /* Green for add product */
+    color: white;
+    text-decoration: none; /* Remove underline from link */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.add-product-link-btn:hover {
+    background-color: #218838;
+}

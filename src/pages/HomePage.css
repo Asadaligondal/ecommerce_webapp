@@ -1,119 +1,157 @@
-/* src/pages/HomePage.css */
+/* client/src/pages/HomePage.css */
 
-.homepage-container {
-  padding: 20px; /* Base padding, can be overridden by App.css main padding */
+.home-page-container {
+    padding: 40px 20px; /* More padding top/bottom, some side padding */
+    max-width: 1200px; /* Max width for content */
+    margin: 0 auto; /* Center the container */
+    min-height: 70vh; /* Ensure it takes up some height even with few products */
 }
 
-.homepage-title {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333;
+.home-page-title {
+    text-align: center;
+    color: #333;
+    font-size: 1.7em;
+    margin-bottom: 40px;
+    color: #ffffff; /* A nice green accent */
+    font-weight: 700;
+    letter-spacing: 1px;
+    width: 100%;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    background: gray;
+    padding: 10px;
+    border-radius: 8px;
 }
 
-.filter-controls-modern {
-  margin-bottom: 30px;
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
+.product-list-grid {
+    display: grid;
+    /* Responsive grid:
+       - auto-fill: tries to fit as many columns as possible
+       - minmax(280px, 1fr): columns will be at least 280px, but will grow to fill space
+    */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px; /* Space between grid items */
+    justify-content: center; /* Center items if they don't fill the full width */
 }
 
-.search-input-wrapper-modern {
-  display: flex; /* Use flexbox to align icon and input */
-  align-items: center; /* Vertically center icon and text */
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 25px; /* Makes it pill-shaped */
-  padding: 8px 18px; /* Padding inside the rounded box */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.08); /* Subtle shadow for depth */
-  flex-grow: 1;
-  max-width: 350px;
-  min-width: 250px;
+/* Message styling for loading/error/no products */
+.home-page-container.error-message,
+.home-page-container.no-products-message {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2em;
+    color: #555;
 }
 
-.search-icon-modern {
-  color: #777; /* Color of the icon */
-  margin-right: 10px; /* Space between icon and input text */
-  font-size: 1.2em; /* Size of the icon */
+.home-page-container.error-message {
+    color: #d9534f;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    border-radius: 8px;
+    margin-top: 50px;
 }
 
-.search-input-modern {
-  border: none; /* Remove default input border */
-  outline: none; /* Remove focus outline */
-  flex-grow: 1; /* Allow input to take remaining space */
-  padding: 0; /* Remove default padding as wrapper handles it */
-  font-size: 1.05em;
-  background-color: transparent; /* Make input background transparent to show wrapper's background */
-  color: #333;
+.home-page-container.no-products-message {
+    color: #777;
 }
 
-/* --- Styles for Category Select (already looking good, just ensuring consistency) --- */
-.category-select-modern {
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 25px; /* Pill-shaped */
-  background-color: white;
-  font-size: 1.05em;
-  color: #333;
-  cursor: pointer;
-  outline: none;
-  appearance: none;
-  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23777%22%20d%3D%22M6%209L0%203h12z%22%2F%3E%3C%2Fsvg%3E');
-  background-repeat: no-repeat;
-  background-position: right 15px center;
-  background-size: 10px;
-  min-width: 180px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-}
-
-/* ... rest of HomePage.css including media queries ... */
-
-/* Adjust media queries for HomePage.css if needed */
+/* Basic responsiveness for smaller screens */
 @media (max-width: 768px) {
-  .filter-controls-modern {
-    flex-direction: column;
-    gap: 15px;
-  }
-  .search-input-wrapper-modern,
-  .category-select-modern {
-    min-width: 100%;
-    max-width: none;
-  }
-  /* ... other media queries ... */
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.no-products-message {
-  text-align: center;
-  font-size: 1.1em;
-  margin-top: 50px;
-  color: #666;
-}
-
-/* Media queries for HomePage.css */
-@media (max-width: 768px) {
-  .filter-search-controls {
-    flex-direction: column;
-    gap: 15px;
-  }
-  .filter-search-input,
-  .filter-search-select {
-    min-width: 100%; /* Make them full width */
-  }
-  .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 15px;
-  }
+    .home-page-title {
+        font-size: 2.2em;
+    }
+    .product-list-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+    }
 }
 
 @media (max-width: 480px) {
-  .product-grid {
-    grid-template-columns: 1fr; /* Single column on very small screens */
-  }
+    .home-page-title {
+        font-size: 1.8em;
+        margin-bottom: 30px;
+    }
+    .product-list-grid {
+        grid-template-columns: 1fr; /* Single column on very small screens */
+        gap: 15px;
+    }
+    .home-page-container {
+        padding: 20px 10px;
+    }
 }
+.product-filters {
+    display: flex;
+    justify-content: center; /* Center the single search input */
+    gap: 20px; /* Keep gap in case you add something else later */
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.search-input { /* No change needed here if you reuse the .search-input class */
+    padding: 12px 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.1em;
+    width: 400px; /* Make it a bit wider since it's alone */
+    max-width: 100%;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #28aa46;
+    box-shadow: 0 0 0 3px rgba(40, 170, 70, 0.2);
+    outline: none;
+}
+
+/* client/src/pages/HomePage.css */
+
+/* ... (your existing .product-filters, .search-input etc.) ... */
+
+.product-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Adjust gap between input and button */
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    /* Keep existing styles */
+    width: 300px; /* Adjust width as needed for input beside button */
+}
+
+.search-button {
+    padding: 12px 25px;
+    background-color: #28aa46; /* Green accent color */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+.search-button:hover {
+    background-color: #218838; /* Darker green on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-button:active {
+    background-color: #1e7e34;
+    transform: translateY(1px);
+}
+
+/* Adjust media queries if necessary, especially for the gap and width */
+@media (max-width: 768px) {
+    .product-filters {
+        flex-direction: column; /* Stack input and button vertically */
+        align-items: center;
+    }
+    .search-input,
+    .search-button {
+        width: 90%; /* Make them full width on small screens */
+    }
+}
+
+/* ... (rest of your HomePage.css) ... */

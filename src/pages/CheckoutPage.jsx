@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import productsData from '../data/products';
 import OrderConfirmationModal from '../components/orderconfirmation';
 
 import './CheckoutPage.css';
@@ -62,85 +61,76 @@ function CheckoutPage() {
   };
 
   const calculateSubtotal = () => {
-    let total = 0;
-    cart.forEach(cartItem => {
-      const product = productsData.find(p => p.id === cartItem.productId);
-      if (product) {
-        total += product.price * cartItem.quantity;
-      }
-    });
-    return total;
-  };
+  return cart.reduce((total, cartItem) => {
+    if (!cartItem || !cartItem.price || !cartItem.quantity) return total;
+    return total + (cartItem.price * cartItem.quantity);
+  }, 0);
+};
 
   const subtotal = calculateSubtotal();
   const grandTotal = subtotal + SHIPPING_FEE;
 
   // --- MODIFIED handleConfirmOrder function ---
-  const handleConfirmOrder = async () => { // Make function async
-    if (cart.length === 0) {
-      alert("Your cart is empty. Cannot place an empty order.");
-      return;
+  const handleConfirmOrder = async () => {
+  if (cart.length === 0) {
+    alert("Your cart is empty. Cannot place an empty order.");
+    return;
+  }
+
+  if (!validateForm()) {
+    return;
+  }
+
+  setIsLoading(true);
+
+  const orderDataToSend = {
+    items: cart.map(item => ({
+      productId: item.productId,
+      name: item.name || 'Unknown Product',
+      quantity: item.quantity,
+      price: item.price || 0,
+    })),
+    deliveryInfo: deliveryInfo,
+    subtotal: subtotal,
+    shipping: SHIPPING_FEE,
+    grandTotal: grandTotal
+  };
+
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/place-order`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(orderDataToSend),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to place order.');
     }
 
-    if (!validateForm()) {
-      return; // Stop if form validation fails
-    }
+    const data = await response.json();
 
-    setIsLoading(true); // Set loading state to true
-
-    const orderDataToSend = {
-        items: cart.map(item => {
-            const product = productsData.find(p => p.id === item.productId);
-            return {
-                productId: item.productId,
-                name: product ? product.name : 'Unknown Product',
-                quantity: item.quantity,
-                price: product ? product.price : 0,
-            };
-        }),
-        deliveryInfo: deliveryInfo,
-        subtotal: subtotal,
-        shipping: SHIPPING_FEE,
-        grandTotal: grandTotal
+    const detailsForModal = {
+      orderId: data.orderId,
+      email: deliveryInfo.email,
+      totalItems: cart.reduce((sum, item) => sum + item.quantity, 0),
+      grandTotal: grandTotal
     };
 
-    try {
-        const response = await fetch(`${BACKEND_URL}/api/place-order`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(orderDataToSend),
-        });
+    setConfirmedOrderDetails(detailsForModal);
+    setShowConfirmationModal(true);
 
-        if (!response.ok) {
-            // If response is not OK (e.g., 400, 500 status)
-            const errorData = await response.json(); // Try to parse error message from backend
-            throw new Error(errorData.message || 'Failed to place order.');
-        }
+    console.log("Order successfully placed. Backend response:", data);
 
-        const data = await response.json(); // Parse the JSON response from backend
-
-        // Prepare details for the confirmation modal using data from backend
-        const detailsForModal = {
-            orderId: data.orderId, // Use the orderId sent from the backend
-            email: deliveryInfo.email,
-            totalItems: cart.reduce((sum, item) => sum + item.quantity, 0),
-            grandTotal: grandTotal
-        };
-
-        setConfirmedOrderDetails(detailsForModal);
-        setShowConfirmationModal(true);
-
-        console.log("Order successfully placed. Backend response:", data);
-
-    } catch (error) {
-        console.error("Error placing order:", error);
-        alert(`Order placement failed: ${error.message}`); // Show error to user
-    } finally {
-        setIsLoading(false); // Always set loading state to false after attempt
-    }
-  };
+  } catch (error) {
+    console.error("Error placing order:", error);
+    alert(`Order placement failed: ${error.message}`);
+  } finally {
+    setIsLoading(false);
+  }
+};
   // --- END MODIFIED handleConfirmOrder function ---
 
   const handleCloseModal = () => {
@@ -209,21 +199,20 @@ function CheckoutPage() {
           </div>
 
           <div className="order-summary-list">
-            <h3>Items in your order:</h3>
-            <ul>
-              {cart.map(cartItem => {
-                const product = productsData.find(p => p.id === cartItem.productId);
-                if (!product) return null;
+  <h3>Items in your order:</h3>
+  <ul>
+    {cart.map(cartItem => {
+      if (!cartItem || !cartItem.productId) return null;
 
-                return (
-                  <li key={cartItem.productId} className="summary-item">
-                    <span>{product.name} (x{cartItem.quantity})</span>
-                    <span>${(product.price * cartItem.quantity).toFixed(2)}</span>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+      return (
+        <li key={cartItem.productId} className="summary-item">
+          <span>{cartItem.name} (x{cartItem.quantity})</span>
+          <span>${(cartItem.price * cartItem.quantity).toFixed(2)}</span>
+        </li>
+      );
+    })}
+  </ul>
+</div>
 
           <div className="order-totals-breakdown">
             <div className="total-line">

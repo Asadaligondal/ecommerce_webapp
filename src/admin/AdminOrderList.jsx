@@ -1,7 +1,7 @@
 // client/src/admin/AdminOrderList.jsx
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // <--- NEW IMPORT
+import { useNavigate, Link } from 'react-router-dom';
 import './AdminOrderList.css';
 
 const AdminOrderList = () => {
@@ -59,6 +59,15 @@ const AdminOrderList = () => {
         fetchOrders();
     }, [navigate]); // Add navigate to dependency array
 
+
+ // --- NEW: Logout Handler ---
+    const handleLogout = () => {
+        localStorage.removeItem('adminToken'); // Remove the token from local storage
+        navigate('/admin/login'); // Redirect to the admin login page
+        console.log('Admin logged out.');
+    };
+
+
     // ... (rest of your component's JSX remains the same) ...
     if (loading) {
         return <div className="admin-order-list-container">Loading orders...</div>;
@@ -74,7 +83,20 @@ const AdminOrderList = () => {
 
     return (
         <div className="admin-order-list-container">
+            <div className="admin-header-controls">
             <h1 className="admin-order-list-title">All Orders</h1>
+            <div className="admin-actions-group">
+                <Link to="/admin/products" className="add-product-link-btn"> {/* <--- NEW Link to Product List */}
+                    View All Products
+                </Link>
+                <Link to="/admin/products/add" className="add-product-link-btn">
+                    Add New Product
+                </Link>
+                <button onClick={handleLogout} className="logout-btn">
+                    Logout
+                </button>
+            </div>
+        </div>
             <table className="admin-order-table">
                 <thead>
                     <tr>
@@ -98,7 +120,7 @@ const AdminOrderList = () => {
                             <td>{order.status}</td>
                             <td>
                                 {/* Link or button to view order details */}
-                                <button className="view-details-btn">View Details</button>
+                                <Link to={`/admin/orders/${order.orderid}`} className="view-details-btn">View Details</Link>
                             </td>
                         </tr>
                     ))}
