@@ -1,0 +1,32 @@
+name: CI Pipliine
+
+on:
+  push:
+    branches"
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+        #checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+        #set up node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+        #Install dependencies
+      - name: Install dependencies
+        run: npm install
+    
+        #Run tests
+      - name: Run tests
+        run: npm test
+
+        #Build the frontend
+      - name: Build frontend
+        run: npm run build
