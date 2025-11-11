@@ -25,7 +25,7 @@ jobs:
     
         #Run tests
       - name: Run test file
-        run: npm test.js
+        run: node test.js
 
         #Build the frontend
       - name: Build frontend
