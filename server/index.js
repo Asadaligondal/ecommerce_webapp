@@ -7,6 +7,16 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+
+// DEBUG: Check if .env is loaded
+console.log('=== DEBUG ENV VARIABLES ===');
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
+console.log('ADMIN_USERNAME:', process.env.ADMIN_USERNAME);
+console.log('ADMIN_PASSWORD:', process.env.ADMIN_PASSWORD);
+console.log('EMAIL_USER:', process.env.EMAIL_USER);
+console.log('EMAIL_PASS:', process.env.EMAIL_PASS);
+console.log('===========================');
+
 // --- NEW: Admin Credentials & JWT Secret (from .env) ---
 const JWT_SECRET = process.env.JWT_SECRET;
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
@@ -61,8 +71,8 @@ const transporter = nodemailer.createTransport({
     port: 2525, // This is common for Mailtrap, verify in your settings
     secure: false, // Use 'true' if your port is 465, 'false' for 587 or 2525 (TLS/STARTTLS)
     auth: {
-    user: process.env.MAILTRAP_USER,
-    pass: process.env.MAILTRAP_PASS
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
 }
 
 });

@@ -31,14 +31,14 @@ function HeaderContent() {
     <header className="app-header">
       <nav className="app-nav">
         {/* Logo on the far left */}
-        <Link to="/" className="logo">E-Com</Link>
+        <Link to="/" className="logo">E-Come</Link>
         
         {/* Center navigation */}
         <div className="nav-center">
           <Link to="/">Home</Link>
           <Link to="/products">Products</Link>
           <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to="/contact">Contacts</Link>
         </div>
         
         {/* Right side navigation */}

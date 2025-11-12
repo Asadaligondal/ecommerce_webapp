@@ -1,6 +1,31 @@
+# Environment files (sensitive data)
+.env
+server/.env
+
+# Dependencies
 node_modules
-build
+server/node_modules
+
+# Git
 .git
 .gitignore
-Dockerfile
-README.md
+
+# Logs
+*.log
+logs
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode
+.idea
+
+# Build artifacts
+dist
+build
+
+# Temporary files
+*.tmp
+*.swp
